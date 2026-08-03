@@ -48,24 +48,24 @@ export default function SummitOrganizer() {
 
   return (
     <section className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl rounded-3xl p-6 space-y-6 shadow-2xl relative overflow-hidden">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
+<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
         <div>
-          <div className="flex items-center gap-2 text-blue-400 text-xs font-semibold tracking-wider uppercase mb-1">
+          <div className="flex items-center gap-2 text-unap-brand text-xs font-semibold tracking-wider uppercase mb-1">
             <Calendar className="w-4 h-4" /> Global Leadership Assembly
           </div>
           <h2 className="text-xl font-black text-white tracking-tight">
             SDG Global Summit Organizer
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-unap-brand mt-1">
             Schedule, manage, and coordinate annual UNA Global summits and delegation assemblies
           </p>
         </div>
 
         <button
           onClick={() => setShowModal(true)}
-          className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white text-xs font-bold px-5 py-3 rounded-2xl transition shadow-lg shadow-blue-500/20 flex items-center gap-2 shrink-0 self-start sm:self-auto"
+          className="bg-unap-brand hover:bg-unap-brandhowver text-white text-xs font-extrabold px-5 py-3 rounded-2xl transition shadow-lg shadow-unap-brand/20 flex items-center gap-2 shrink-0 self-start sm:self-auto"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4 h-4 stroke-[3]" />
           Schedule Summit
         </button>
       </div>
@@ -85,7 +85,7 @@ export default function SummitOrganizer() {
             >
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <span className="text-xs font-black text-blue-400 bg-blue-500/10 px-3 py-1 rounded-xl border border-blue-500/20">
+                  <span className="text-xs font-black text-unap-brand bg-blue-500/10 px-3 py-1 rounded-xl border border-blue-500/20">
                     Year {event.year}
                   </span>
                   <span
@@ -100,7 +100,7 @@ export default function SummitOrganizer() {
                   </span>
                 </div>
 
-                <h3 className="font-bold text-white text-base mb-2 group-hover:text-blue-400 transition">
+                <h3 className="font-bold text-white text-base mb-2 group-hover:text-unap-brand transition">
                   {event.title}
                 </h3>
                 <p className="text-xs text-slate-400 italic mb-4 line-clamp-2">
@@ -109,15 +109,15 @@ export default function SummitOrganizer() {
 
                 <div className="space-y-2 text-xs text-slate-300 bg-slate-900/50 p-3.5 rounded-xl border border-slate-800/60">
                   <p className="flex items-center gap-2.5">
-                    <Calendar className="w-4 h-4 text-blue-400 shrink-0" />
+                    <Calendar className="w-4 h-4 text-unap-brand shrink-0" />
                     {event.date}
                   </p>
                   <p className="flex items-center gap-2.5">
-                    <MapPin className="w-4 h-4 text-blue-400 shrink-0" />
+                    <MapPin className="w-4 h-4 text-unap-brand shrink-0" />
                     {event.location}
                   </p>
                   <p className="flex items-center gap-2.5">
-                    <Users className="w-4 h-4 text-blue-400 shrink-0" />
+                    <Users className="w-4 h-4 text-unap-brand shrink-0" />
                     <span className="font-bold text-white">{event.delegatesCount.toLocaleString()}</span> Confirmed Delegates
                   </p>
                 </div>
@@ -125,7 +125,7 @@ export default function SummitOrganizer() {
 
               <div className="mt-5 pt-3.5 border-t border-slate-800/80 flex items-center justify-between text-xs">
                 <span className="text-slate-400 flex items-center gap-1.5 font-medium">
-                  <Mic className="w-3.5 h-3.5 text-blue-400" /> Keynote:
+                  <Mic className="w-3.5 h-3.5 text-unap-brand" /> Keynote:
                 </span>
                 <span className="font-bold text-slate-200">{event.keyNoteSpeaker}</span>
               </div>

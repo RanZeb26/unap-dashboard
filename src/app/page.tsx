@@ -8,17 +8,17 @@ export default function Home() {
     <div className="space-y-4">
       {/* Parallax Clean Hero Section */}
       <section className="relative min-h-[85vh] bg-gradient-to-b from-sky-100 via-white to-slate-50 flex items-center justify-center px-4 sm:px-6 overflow-hidden">
-        {/* Soft Background Graphics */}
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#009EDB]/10 rounded-full blur-3xl pointer-events-none" />
+        {/* Standardized Background Graphics */}
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-unap-brand/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10 pt-12">
-          <div className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#009EDB] bg-sky-50 px-4 py-2 rounded-full border border-sky-200 shadow-sm">
+          <div className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-unap-brand bg-sky-50 px-4 py-2 rounded-full border border-sky-200 shadow-sm">
             <Sparkles className="w-4 h-4" /> United Nations Association of the Philippines
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+          <h1 className="text-4xl sm:text-6xl font-black text-unap-gold tracking-tight leading-tight">
             Connecting Global Goals to <br />
-            <span className="text-[#009EDB]">National Action</span>
+            <span className="text-unap-brand">National Action</span>
           </h1>
 
           <p className="text-slate-600 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed">
@@ -28,7 +28,7 @@ export default function Home() {
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="#sdg-tracker"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#009EDB] hover:bg-sky-600 text-white font-extrabold text-sm transition shadow-lg shadow-sky-500/25 flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-unap-brand hover:bg-unap-brandhowver text-white font-extrabold text-sm transition shadow-lg shadow-sky-500/25 flex items-center justify-center gap-2"
             >
               Explore SDG Dashboard <ArrowDown className="w-4 h-4" />
             </a>
@@ -50,7 +50,7 @@ export default function Home() {
             </div>
             <div className="p-4 bg-white/80 backdrop-blur-md rounded-2xl border border-slate-200 shadow-sm">
               <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">Regions</span>
-              <span className="text-2xl font-black text-[#009EDB] mt-1 block">3 Continents</span>
+              <span className="text-2xl font-black text-unap-brand mt-1 block">3 Continents</span>
             </div>
             <div className="p-4 bg-white/80 backdrop-blur-md rounded-2xl border border-slate-200 shadow-sm">
               <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">Data Source</span>
@@ -58,7 +58,7 @@ export default function Home() {
             </div>
             <div className="p-4 bg-white/80 backdrop-blur-md rounded-2xl border border-slate-200 shadow-sm">
               <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">Target</span>
-              <span className="text-2xl font-black text-amber-600 mt-1 block">2030 Agenda</span>
+              <span className="text-2xl font-black text-unap-gold mt-1 block">2030 Agenda</span>
             </div>
           </div>
         </div>
