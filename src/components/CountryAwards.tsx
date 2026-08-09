@@ -16,10 +16,10 @@ export default function CountryAwards() {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
-          <span className="text-xs font-black text-unap-brand uppercase tracking-widest block mb-1">
+          <span className="text-xs font-black text-[#009EDB] uppercase tracking-widest block mb-1">
             Impact Recognition
           </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-unap-brand tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             Most Improved Country Awards
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 mt-1">
@@ -35,7 +35,7 @@ export default function CountryAwards() {
               onClick={() => setRegionFilter(reg)}
               className={`text-xs px-3.5 py-1.5 rounded-full transition font-bold ${
                 regionFilter === reg
-                  ? "bg-unap-brand text-slate-950 shadow-sm"
+                  ? "bg-[#009EDB] text-white shadow-sm"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -57,7 +57,7 @@ export default function CountryAwards() {
                 <span
                   className={`text-xs font-black px-3 py-1 rounded-full flex items-center gap-1 ${
                     item.rank === 1
-                      ? "bg-unap-gold/10 text-unap-gold border border-unap-gold/20"
+                      ? "bg-amber-100 text-amber-800 border border-amber-200"
                       : "bg-slate-100 text-slate-700"
                   }`}
                 >
@@ -73,7 +73,7 @@ export default function CountryAwards() {
                 <span className="text-[10px] text-slate-500 block font-bold uppercase tracking-wider">
                   Growth Driver
                 </span>
-                <span className="text-xs font-bold text-unap-brand block mt-0.5">
+                <span className="text-xs font-bold text-slate-800 block mt-0.5">
                   {item.mostImprovedGoal}
                 </span>
               </div>
