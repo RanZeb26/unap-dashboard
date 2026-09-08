@@ -8,10 +8,14 @@ import {
   Users,
   FileSpreadsheet,
   Cpu,
-  Database,
-  Target,
   Radio,
 } from "lucide-react";
+
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+} from "react-simple-maps";
 
 // -----------------------------------------------------
 // MOCK DATA
@@ -263,240 +267,365 @@ export default function Home() {
 
 
                 {/* MAP AREA */}
-                <div
+{/* =====================================================
+    INTERACTIVE SVG WORLD MAP
+===================================================== */}
+
+<div
   className="
-    relative mt-4 h-[250px]
-    overflow-hidden rounded-lg
+    relative mt-4
+    h-[250px]
+    overflow-hidden
+    rounded-lg
     border border-slate-700
-    bg-[#4b73a5]
+    bg-[#06132d]
   "
 >
-  {/* World Map Background */}
-  <img
-    src="/images/world-map.png"
-    alt="World Impact Map"
-    className="
-      absolute inset-0
-      h-full w-full
-      object-fill
-      opacity-70
-    "
-  />
 
-  {/* Heat Overlay */}
+  {/* Background glow */}
   <div
     className="
+      pointer-events-none
       absolute inset-0
-      bg-gradient-to-r
-      from-emerald-500/20
-      via-yellow-400/30
-      to-red-500/30
-      mix-blend-screen
+      bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.18),transparent_65%)]
     "
   />
-                  {/* GRID */}
-                  <div
-                    className="
-                      pointer-events-none absolute inset-0
-                      opacity-20
-                      [background-image:linear-gradient(rgba(50,150,255,.2)_1px,transparent_1px),linear-gradient(90deg,rgba(50,150,255,.2)_1px,transparent_1px)]
-                      [background-size:25px_25px]
-                    "
-                  />
 
-                  {/* WORLD MAP */}
-                  <svg
-                    viewBox="0 0 1000 500"
-                    className="
-                      relative z-10
-                      w-full h-full
-                      max-w-[600px]
-                      opacity-90
-                    "
-                  >
+  {/* Grid */}
+  <div
+    className="
+      pointer-events-none
+      absolute inset-0
+      z-10
+      opacity-20
+      [background-image:linear-gradient(rgba(50,150,255,.2)_1px,transparent_1px),linear-gradient(90deg,rgba(50,150,255,.2)_1px,transparent_1px)]
+      [background-size:25px_25px]
+    "
+  />
 
-                    {/* North America */}
-                    <circle
-  cx="170"
-  cy="160"
-  r="125"
-  className="fill-transparent"
-  onMouseMove={(e) =>
-    handleMouseMove(e, "na")
-  }
-  onMouseLeave={() =>
-    setTooltip({
-      ...tooltip, 
-      show: false,
-    })
-  }
-/>
+  {/* SVG WORLD MAP */}
+  <ComposableMap
+    projection="geoEqualEarth"
+    projectionConfig={{
+      scale: 250,
+    }}
+    className="absolute inset-0 h-full w-full"
+  >
 
-                    {/* South America */}
-                    <circle
-  cx="310"
-  cy="370"
-  r="85"
-  className="fill-transparent"
-  onMouseMove={(e) =>
-    handleMouseMove(e, "sa")
-  }
-  onMouseLeave={() =>
-    setTooltip({
-      ...tooltip, 
-      show: false,
-    })
-  }
-/>
+    <Geographies geography="/world-110m.json">
 
-                    {/* Europe */}
-                    <circle
-  cx="580"
-  cy="170"
-  r="65"
-  className="fill-transparent"
-  onMouseMove={(e) =>
-    handleMouseMove(e, "eu")
-  }
-  onMouseLeave={() =>
-    setTooltip({
-      ...tooltip, 
-      show: false,
-    })
-  }
-/>
+      {({ geographies }) =>
+        geographies.map((geo) => {
 
-                    {/* Africa */}
-                    <circle
-  cx="570"
-  cy="340"
-  r="105"
-  className="fill-transparent"
-  onMouseMove={(e) =>
-    handleMouseMove(e, "af")
-  }
-  onMouseLeave={() =>
-    setTooltip({
-      ...tooltip, 
-      show: false,
-    })
-  }
-/>
+          const countryName =
+            geo.properties.name;
 
+          /*
+           * Example regional score.
+           * Later this can come from your database/API.
+           */
+          let score = 65;
 
-                    {/* Asia */}
-                    <circle
-  cx="920"
-  cy="245"
-  r="105"
-  className="fill-transparent"
-  onMouseMove={(e) =>
-    handleMouseMove(e, "as")
-  }
-  onMouseLeave={() =>
-    setTooltip({
-      ...tooltip,
-      show: false,
-    })
-  }
-/>
+          if (
+            [
+              "Canada",
+              "United States of America",
+            ].includes(countryName)
+          ) {
+            score = 74.5;
+          }
 
+          if (
+            [
+              "Germany",
+              "France",
+              "Sweden",
+              "Denmark",
+              "Finland",
+            ].includes(countryName)
+          ) {
+            score = 83.1;
+          }
 
+          if (
+            [
+              "Brazil",
+              "Argentina",
+              "Chile",
+            ].includes(countryName)
+          ) {
+            score = 68.2;
+          }
 
+          if (
+            [
+              "China",
+              "Japan",
+              "India",
+              "South Korea",
+            ].includes(countryName)
+          ) {
+            score = 71.9;
+          }
 
-                    {/* Oceania */}
-                    <circle
-  cx="1020"
-  cy="390"
-  r="80"
-  className="fill-transparent"
-  onMouseMove={(e) =>
-    handleMouseMove(e, "oc")
-  }
-  onMouseLeave={() =>
-    setTooltip({
-      ...tooltip,
-      show: false,
-    })
-  }
-/>
+          if (
+            [
+              "Australia",
+              "New Zealand",
+            ].includes(countryName)
+          ) {
+            score = 69.8;
+          }
 
-                  </svg>
+          if (
+            [
+              "Nigeria",
+              "Ethiopia",
+              "Kenya",
+              "South Africa",
+            ].includes(countryName)
+          ) {
+            score = 58.4;
+          }
 
+          return (
+            <Geography
+              key={geo.rsmKey}
+              geography={geo}
 
-                  {/* 73% CIRCLE */}
-                  <div
-                    className="
-                      absolute left-[1%] top-[80%]
-                      z-20 -translate-y-1/2
-                    "
-                  >
+              onMouseMove={(e) => {
 
-                    <div
-                      className="
-                        relative flex
-                        h-20 w-20
-                        items-center justify-center
-                        rounded-full
-                        bg-[#071331]
-                        shadow-[0_0_25px_rgba(0,190,255,.25)]
-                      "
-                    >
+                const mapRect =
+                  e.currentTarget
+                    .closest(".relative")
+                    ?.getBoundingClientRect();
 
-                      <div
-                        className="
-                          absolute inset-0
-                          rounded-full
-                          p-[5px]
-                        "
-                        style={{
-                          background:
-                            "conic-gradient(#10b981 0deg 190deg,#0ea5e9 190deg 263deg,#1e355f 263deg 360deg)",
-                        }}
-                      >
-                        <div className="h-full w-full rounded-full bg-[#071331]" />
-                      </div>
+                if (!mapRect) return;
 
-                      <div className="relative text-center">
-                        <div className="text-xl font-black">
-                          73%
-                        </div>
+                setTooltip({
+                  show: true,
+                  text: `${countryName}: ${score}`,
+                  x:
+                    e.clientX -
+                    mapRect.left +
+                    12,
+                  y:
+                    e.clientY -
+                    mapRect.top -
+                    20,
+                });
 
-                        <div className="text-[6px] font-bold uppercase text-slate-400">
-                          Overall Progress
-                        </div>
-                      </div>
+              }}
 
-                    </div>
+              onMouseLeave={() => {
+                setTooltip((prev) => ({
+                  ...prev,
+                  show: false,
+                }));
+              }}
 
-                  </div>
+              style={{
+                default: {
+                  fill:
+                    score >= 80
+                      ? "#10b981"
+                      : score >= 70
+                      ? "#0ea5e9"
+                      : score >= 60
+                      ? "#eab308"
+                      : "#ef4444",
+
+                  stroke: "#071a36",
+                  strokeWidth: 0.5,
+                  outline: "none",
+
+                  transition:
+                    "all 200ms ease",
+                },
+
+                hover: {
+                  fill: "#38bdf8",
+                  stroke: "#ffffff",
+                  strokeWidth: 1,
+                  outline: "none",
+                  cursor: "pointer",
+                },
+
+                pressed: {
+                  fill: "#0284c7",
+                  outline: "none",
+                },
+              }}
+            />
+          );
+        })
+      }
+
+    </Geographies>
+
+  </ComposableMap>
 
 
-                  {/* TOOLTIP */}
-                  {tooltip.show && (
-                    <div
-                      className="
-                        absolute z-50
-                        rounded-md
-                        border border-sky-500
-                        bg-[#071331]
-                        px-2 py-1
-                        text-[9px]
-                        font-bold
-                        text-white
-                        shadow-xl
-                        pointer-events-none
-                      "
-                      style={{
-                        left: tooltip.x,
-                        top: tooltip.y,
-                      }}
-                    >
-                      {tooltip.text}
-                    </div>
-                  )}
+  {/* =====================================================
+      MAP LEGEND
+  ===================================================== */}
 
-                </div>
+  <div
+    className="
+      absolute
+      bottom-2
+      right-2
+      z-20
+      rounded-md
+      border border-slate-600
+      bg-[#071331]/90
+      px-2
+      py-1
+      backdrop-blur-sm
+    "
+  >
+
+    <div className="mb-1 text-[6px] font-black uppercase text-slate-400">
+      SDG Score
+    </div>
+
+    <div className="flex items-center gap-1">
+
+      <span className="h-2 w-2 rounded-sm bg-red-500" />
+      <span className="text-[6px] text-slate-400">
+        &lt;60
+      </span>
+
+      <span className="h-2 w-2 rounded-sm bg-yellow-500" />
+      <span className="text-[6px] text-slate-400">
+        60–69
+      </span>
+
+      <span className="h-2 w-2 rounded-sm bg-sky-500" />
+      <span className="text-[6px] text-slate-400">
+        70–79
+      </span>
+
+      <span className="h-2 w-2 rounded-sm bg-emerald-500" />
+      <span className="text-[6px] text-slate-400">
+        80+
+      </span>
+
+    </div>
+
+  </div>
+
+
+  {/* =====================================================
+      OVERALL PROGRESS
+  ===================================================== */}
+
+  <div
+    className="
+      absolute
+      left-[2%]
+      top-[80%]
+      z-30
+      -translate-y-1/2
+    "
+  >
+
+    <div
+      className="
+        relative
+        flex
+        h-20
+        w-20
+        items-center
+        justify-center
+        rounded-full
+        bg-[#071331]
+        shadow-[0_0_25px_rgba(0,190,255,.25)]
+      "
+    >
+
+      <div
+        className="
+          absolute
+          inset-0
+          rounded-full
+          p-[5px]
+        "
+        style={{
+          background:
+            "conic-gradient(#10b981 0deg 190deg,#0ea5e9 190deg 263deg,#1e355f 263deg 360deg)",
+        }}
+      >
+
+        <div
+          className="
+            h-full
+            w-full
+            rounded-full
+            bg-[#071331]
+          "
+        />
+
+      </div>
+
+      <div className="relative text-center">
+
+        <div className="text-xl font-black">
+          73%
+        </div>
+
+        <div
+          className="
+            text-[6px]
+            font-bold
+            uppercase
+            text-slate-400
+          "
+        >
+          Overall Progress
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  {/* =====================================================
+      TOOLTIP
+  ===================================================== */}
+
+  {tooltip.show && (
+
+    <div
+      className="
+        pointer-events-none
+        absolute
+        z-50
+        rounded-md
+        border
+        border-sky-500
+        bg-[#071331]
+        px-2
+        py-1
+        text-[9px]
+        font-bold
+        text-white
+        shadow-xl
+      "
+      style={{
+        left: tooltip.x,
+        top: tooltip.y,
+      }}
+    >
+      {tooltip.text}
+    </div>
+
+  )}
+
+</div>
 
               </div>
 
