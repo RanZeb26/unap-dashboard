@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef,useEffect, useState } from "react";
 import {
   BarChart3,
   Globe2,
@@ -54,13 +54,9 @@ const regionalData = {
   },
 };
 
-const countries = [
-  { rank: 1, name: "Sweden", score: 85.4 },
-  { rank: 2, name: "Denmark", score: 84.1 },
-  { rank: 3, name: "Finland", score: 82.7 },
-  { rank: 4, name: "Germany", score: 81.3 },
-  { rank: 5, name: "France", score: 80.6 },
-];
+
+
+
 
 const sdgGoals = [
   { goal: "SDG 1", value: 42 },
@@ -104,11 +100,61 @@ const features = [
   },
 ];
 
+interface Country {
+  country_id: number;
+  country_code: string;
+  country_name: string;
+  region_name: string;
+  score: number | null;
+}
+const regionalAverage = 72;
+const regionalAngle = regionalAverage * 3.6;
+
+const overallProgress = 73;
+const overallAngle = overallProgress * 3.6;
 // -----------------------------------------------------
 // COMPONENT
 // -----------------------------------------------------
 
 export default function Home() {
+  const [countries, setCountries] = useState<Country[]>([]);
+const [loadingCountries, setLoadingCountries] = useState(true);
+const [countryError, setCountryError] = useState("");
+const countryScoreMap = Object.fromEntries(
+  countries.map((country) => [
+    country.country_name,
+    country.score,
+  ])
+);
+
+
+useEffect(() => {
+  async function loadCountries() {
+    try {
+      setLoadingCountries(true);
+
+      const response = await fetch("/api/countries");
+
+      if (!response.ok) {
+        throw new Error("Failed to load countries");
+      }
+
+      const data: Country[] = await response.json();
+
+      setCountries(data);
+
+    } catch (error) {
+      console.error(error);
+      setCountryError("Unable to load country data.");
+
+    } finally {
+      setLoadingCountries(false);
+    }
+  }
+
+  loadCountries();
+}, []);
+
   const [tooltip, setTooltip] = useState<{
     show: boolean;
     text: string;
@@ -121,31 +167,15 @@ export default function Home() {
     y: 0,
   });
 
-  const handleMouseMove = (
-    e: React.MouseEvent,
-    regionKey: keyof typeof regionalData
-  ) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const data = regionalData[regionKey];
-
-    setTooltip({
-      show: true,
-      text: `${data.name}: ${data.score}`,
-      x: e.clientX - rect.left + 10,
-      y: e.clientY - rect.top - 20,
-    });
-  };
-
   return (
     <main
   className="
     min-h-screen
-    bg-[#03091f]
+    bg-[#2fa5b1]
     bg-cover
     bg-center
     bg-fixed
     text-white
-    px-3 py-6 sm:px-6
   "
   style={{
     backgroundImage: "url('/images/sdg-background.jpg')",
@@ -154,14 +184,14 @@ export default function Home() {
 
       {/* =====================================================
           MAIN DASHBOARD
+                      border border-[#173b70]
       ===================================================== */}
-      <div className="mx-auto w-full max-w-[1100px]">
+      <div className="mx-auto w-full">
 
         <div
           className="
             overflow-hidden rounded-[28px]
-            border border-[#173b70]
-            bg-[#071331]
+            bg-[#ffffff]
             shadow-[0_0_60px_rgba(0,120,255,0.12)]
           "
         >
@@ -174,26 +204,26 @@ export default function Home() {
               relative overflow-hidden
               px-5 py-6
               text-center
-              sm:px-10 sm:py-8
+              sm:px-10 sm:py-3
             "
           >
 
             {/* Glow */}
             <div className="absolute left-1/2 top-0 h-40 w-80 -translate-x-1/2 rounded-full bg-sky-500/10 blur-3xl" />
 
-            <div className="relative">
-
-
+            <div className=" relative z-10 
+      flex flex-col items-center justify-between gap-6 
+      md:flex-row md:gap-4">
+<div className="flex w-full justify-center md:w-auto md:justify-start">
+      <img
+        src="/images/GLOBAL-UNAP LOGO.jpg" 
+        alt="United Nations Association of the Philippines"
+        className="h-26 w-auto object-contain brightness-110"
+      />
+    </div><div className="text-center flex-1">
               {/* TITLE */}
-              <h1
-                className="
-                  text-3xl font-black
-                  uppercase leading-[0.95]
-                  tracking-tight
-                  text-white
-                  sm:text-5xl
-                "
-              >
+              <h1 className="text-3xl font-black uppercase leading-[0.95]
+                  tracking-tight text-[#0f8f98] sm:text-3xl">
                 GLOBAL SDG
                 <br />
                 DIGITAL DASHBOARD
@@ -205,7 +235,7 @@ export default function Home() {
                   mt-3
                   text-xs font-black
                   uppercase tracking-[0.28em]
-                  text-sky-400
+                  text-[#089faf]
                   sm:text-sm
                 "
               >
@@ -216,7 +246,7 @@ export default function Home() {
                 className="
                   mx-auto mt-3 max-w-2xl
                   text-[11px] leading-relaxed
-                  text-slate-300
+                  text-[#0f8f98]
                   sm:text-sm
                 "
               >
@@ -224,7 +254,15 @@ export default function Home() {
                 <br className="hidden sm:block" />
                 and accelerate SDG progress worldwide.
               </p>
-
+              </div>
+{/* RIGHT SIDE: SDG 17 Partnerships for the Goals Logo */}
+    <div className="flex w-full justify-center md:w-auto md:justify-end">
+      <img
+        src="/images/GOALS.jpg" 
+        alt="SDG 17 Partnerships for the Goals"
+        className="h-26 w-auto object-contain rounded-md"
+      />
+    </div>
             </div>
           </header>
 
@@ -240,26 +278,27 @@ export default function Home() {
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
 
               {/* ---------------------------------------------
-                  SDG OVERVIEW
+                  SDG OVERVIEW CARD
               --------------------------------------------- */}
               <div
                 className="
-                  relative min-h-[270px]
+                  min-h-[380px] sm:min-h-[440px] md:min-h-[480px]
                   overflow-hidden rounded-xl
-                  border border-[#24467b]
-                  bg-[#0a1b3d]
+                  border border-amber-400
+                  bg-[#0f8f98]
                   p-3
                   lg:col-span-2
+                  flex flex-col
                 "
               >
 
                 <div className="mb-2 flex items-center justify-between">
 
-                  <span className="text-[9px] font-black uppercase tracking-wider text-slate-300">
+                  <span className="text-[15px] font-black uppercase tracking-wider text-white">
                     SDG Overview
                   </span>
 
-                  <span className="text-[8px] text-sky-400">
+                  <span className="text-[15px] font-black text-white">
                     GLOBAL PROGRESS
                   </span>
 
@@ -274,11 +313,13 @@ export default function Home() {
 <div
   className="
     relative mt-4
-    h-[250px]
+    h-[280px] sm:h-[340px] md:h-[380px]
+    w-full
+    flex-1
     overflow-hidden
     rounded-lg
-    border border-slate-700
-    bg-[#06132d]
+    border border-amber-400
+    bg-[#077983]
   "
 >
 
@@ -307,7 +348,7 @@ export default function Home() {
   <ComposableMap
     projection="geoEqualEarth"
     projectionConfig={{
-      scale: 250,
+      scale: 230,
     }}
     className="absolute inset-0 h-full w-full"
   >
@@ -317,149 +358,91 @@ export default function Home() {
       {({ geographies }) =>
         geographies.map((geo) => {
 
-          const countryName =
-            geo.properties.name;
+const countryName = geo.properties.name;
 
-          /*
-           * Example regional score.
-           * Later this can come from your database/API.
-           */
-          let score = 65;
+const score =
+  Number(countryScoreMap[countryName]) || 0;
 
-          if (
-            [
-              "Canada",
-              "United States of America",
-            ].includes(countryName)
-          ) {
-            score = 74.5;
-          }
+const countryData = countries.find(
+  (country) =>
+    country.country_name === countryName
+);
 
-          if (
-            [
-              "Germany",
-              "France",
-              "Sweden",
-              "Denmark",
-              "Finland",
-            ].includes(countryName)
-          ) {
-            score = 83.1;
-          }
 
-          if (
-            [
-              "Brazil",
-              "Argentina",
-              "Chile",
-            ].includes(countryName)
-          ) {
-            score = 68.2;
-          }
-
-          if (
-            [
-              "China",
-              "Japan",
-              "India",
-              "South Korea",
-            ].includes(countryName)
-          ) {
-            score = 71.9;
-          }
-
-          if (
-            [
-              "Australia",
-              "New Zealand",
-            ].includes(countryName)
-          ) {
-            score = 69.8;
-          }
-
-          if (
-            [
-              "Nigeria",
-              "Ethiopia",
-              "Kenya",
-              "South Africa",
-            ].includes(countryName)
-          ) {
-            score = 58.4;
-          }
 
           return (
-            <Geography
-              key={geo.rsmKey}
-              geography={geo}
+      <Geography
+        key={geo.rsmKey}
+        geography={geo}
 
-              onMouseMove={(e) => {
+        onMouseMove={(e) => {
+          const mapRect =
+            e.currentTarget
+              .closest(".relative")
+              ?.getBoundingClientRect();
 
-                const mapRect =
-                  e.currentTarget
-                    .closest(".relative")
-                    ?.getBoundingClientRect();
+          if (!mapRect) return;
 
-                if (!mapRect) return;
+          setTooltip({
+            show: true,
+            text: `${countryName}: ${
+              score > 0
+                ? score.toFixed(1)
+                : "No data"
+            }`,
+            x:
+              e.clientX -
+              mapRect.left +
+              12,
+            y:
+              e.clientY -
+              mapRect.top -
+              20,
+          });
+        }}
 
-                setTooltip({
-                  show: true,
-                  text: `${countryName}: ${score}`,
-                  x:
-                    e.clientX -
-                    mapRect.left +
-                    12,
-                  y:
-                    e.clientY -
-                    mapRect.top -
-                    20,
-                });
+        onMouseLeave={() => {
+          setTooltip((prev) => ({
+            ...prev,
+            show: false,
+          }));
+        }}
 
-              }}
+        style={{
+          default: {
+            fill:
+              score >= 80
+                ? "#10b981"
+                : score >= 70
+                ? "#0ea5e9"
+                : score >= 60
+                ? "#eab308"
+                : score > 0
+                ? "#ef4444"
+                : "#334155",
 
-              onMouseLeave={() => {
-                setTooltip((prev) => ({
-                  ...prev,
-                  show: false,
-                }));
-              }}
+            stroke: "#071a36",
+            strokeWidth: 0.5,
+            outline: "none",
+          },
 
-              style={{
-                default: {
-                  fill:
-                    score >= 80
-                      ? "#10b981"
-                      : score >= 70
-                      ? "#0ea5e9"
-                      : score >= 60
-                      ? "#eab308"
-                      : "#ef4444",
+          hover: {
+            fill: "#38bdf8",
+            stroke: "#ffffff",
+            strokeWidth: 1,
+            outline: "none",
+            cursor: "pointer",
+          },
 
-                  stroke: "#071a36",
-                  strokeWidth: 0.5,
-                  outline: "none",
-
-                  transition:
-                    "all 200ms ease",
-                },
-
-                hover: {
-                  fill: "#38bdf8",
-                  stroke: "#ffffff",
-                  strokeWidth: 1,
-                  outline: "none",
-                  cursor: "pointer",
-                },
-
-                pressed: {
-                  fill: "#0284c7",
-                  outline: "none",
-                },
-              }}
-            />
-          );
-        })
-      }
+          pressed: {
+            fill: "#0284c7",
+            outline: "none",
+          },
+        }}
+      />
+    );
+  })
+}
 
     </Geographies>
 
@@ -473,8 +456,8 @@ export default function Home() {
   <div
     className="
       absolute
-      bottom-2
-      right-2
+  bottom-4
+    right-4
       z-20
       rounded-md
       border border-slate-600
@@ -485,29 +468,29 @@ export default function Home() {
     "
   >
 
-    <div className="mb-1 text-[6px] font-black uppercase text-slate-400">
+    <div className="mb-1 text-[10px] font-black uppercase text-slate-400">
       SDG Score
     </div>
 
     <div className="flex items-center gap-1">
 
       <span className="h-2 w-2 rounded-sm bg-red-500" />
-      <span className="text-[6px] text-slate-400">
+      <span className="text-[10px] text-slate-400">
         &lt;60
       </span>
 
       <span className="h-2 w-2 rounded-sm bg-yellow-500" />
-      <span className="text-[6px] text-slate-400">
+      <span className="text-[10px] text-slate-400">
         60–69
       </span>
 
       <span className="h-2 w-2 rounded-sm bg-sky-500" />
-      <span className="text-[6px] text-slate-400">
+      <span className="text-[10px] text-slate-400">
         70–79
       </span>
 
       <span className="h-2 w-2 rounded-sm bg-emerald-500" />
-      <span className="text-[6px] text-slate-400">
+      <span className="text-[10px] text-slate-400">
         80+
       </span>
 
@@ -523,7 +506,7 @@ export default function Home() {
   <div
     className="
       absolute
-      left-[2%]
+      left-[3%]
       top-[80%]
       z-30
       -translate-y-1/2
@@ -552,9 +535,11 @@ export default function Home() {
           p-[5px]
         "
         style={{
-          background:
-            "conic-gradient(#10b981 0deg 190deg,#0ea5e9 190deg 263deg,#1e355f 263deg 360deg)",
-        }}
+  background: `conic-gradient(
+    #0af45c 0deg ${overallAngle}deg,
+    #1e355f ${overallAngle}deg 360deg
+  )`,
+}}
       >
 
         <div
@@ -571,12 +556,12 @@ export default function Home() {
       <div className="relative text-center">
 
         <div className="text-xl font-black">
-          73%
+          {overallProgress}%
         </div>
 
         <div
           className="
-            text-[6px]
+            text-[9px]
             font-bold
             uppercase
             text-slate-400
@@ -636,66 +621,80 @@ export default function Home() {
               <div
                 className="
                   rounded-xl
-                  border border-[#24467b]
-                  bg-[#0a1b3d]
+                  border border-amber-400
+                  bg-[#077983]
                   p-4
                 "
               >
 
                 <div className="mb-4 flex items-center justify-between">
 
-                  <span className="text-[9px] font-black uppercase tracking-wider text-slate-300">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-white">
                     Country Rankings
                   </span>
 
-                  <Globe2 className="h-4 w-4 text-sky-400" />
+                  <Globe2 className="h-4 w-4 text-amber-400" />
 
                 </div>
 
-
+{loadingCountries ? (
+  <div className="py-8 text-center text-sm text-slate-400">
+    Loading country data...
+  </div>
+) : countryError ? (
+  <div className="py-8 text-center text-sm text-red-400">
+    {countryError}
+  </div>
+) : countries.length === 0 ? (
+  <div className="py-8 text-center text-sm text-slate-400">
+    No country data available.
+  </div>
+) : (
                 <div className="space-y-3">
 
-                  {countries.map((country) => (
+                  {countries.slice(0, 5).map((country, index) => (
                     <div
-                      key={country.rank}
-                      className="
-                        flex items-center justify-between
-                        border-b border-slate-700/40
-                        pb-2 transition
-                        hover:bg-sky-500/10
-                      "
-                    >
+  key={country.country_id}
+  className="
+    flex items-center justify-between
+    border-b border-slate-700/40
+    pb-2 transition
+    hover:bg-sky-500/10
+  "
+>
+  <div className="flex items-center gap-2">
 
-                      <div className="flex items-center gap-2">
+    <span
+      className={`
+        w-4 text-center
+        text-[12px] font-black
+        ${
+          index === 0
+            ? "text-amber-400"
+            : "text-white"
+        }
+      `}
+    >
+      {index + 1}
+    </span>
 
-                        <span
-                          className={`
-                            w-4 text-center
-                            text-[10px] font-black
-                            ${
-                              country.rank === 1
-                                ? "text-amber-400"
-                                : "text-slate-500"
-                            }
-                          `}
-                        >
-                          {country.rank}
-                        </span>
+    <span className="text-[12px] font-semibold text-white">
+      {country.country_name}
+    </span>
 
-                        <span className="text-[10px] font-semibold text-slate-200">
-                          {country.name}
-                        </span>
+  </div>
 
-                      </div>
+  <span className="text-[12px] font-black text-white">
+    {country.score !== null
+      ? Number(country.score).toFixed(1)
+      : "N/A"}
+  </span>
 
-                      <span className="text-[10px] font-black text-emerald-400">
-                        {country.score}
-                      </span>
-
-                    </div>
+</div>
                   ))}
 
                 </div>
+)}
 
               </div>
 
@@ -720,7 +719,7 @@ export default function Home() {
 
                 <div className="flex items-center justify-between">
 
-                  <span className="text-[9px] font-black uppercase tracking-wider text-slate-300">
+                  <span className="text-[12px] font-black uppercase tracking-wider text-slate-300">
                     SDG Performance
                     <br />
                     By Goal
@@ -780,7 +779,7 @@ export default function Home() {
 
                 <div className="flex items-center justify-between">
 
-                  <span className="text-[9px] font-black uppercase tracking-wider text-slate-300">
+                  <span className="text-[12px] font-black uppercase tracking-wider text-slate-300">
                     Impact Heat Map
                   </span>
 
@@ -839,7 +838,7 @@ export default function Home() {
                 "
               >
 
-                <span className="text-[9px] font-black uppercase tracking-wider text-slate-300">
+                <span className="text-[12px] font-black uppercase tracking-wider text-slate-300">
                   Regional Progress
                 </span>
 
@@ -854,9 +853,11 @@ export default function Home() {
                       rounded-full
                     "
                     style={{
-                      background:
-                        "conic-gradient(#10b981 0deg 259deg,#17345c 259deg 360deg)",
-                    }}
+  background: `conic-gradient(
+    #10b981 0deg ${regionalAngle}deg,
+    #17345c ${regionalAngle}deg 360deg
+  )`,
+}}
                   >
 
                     <div
@@ -871,7 +872,7 @@ export default function Home() {
                       <div className="text-center">
 
                         <div className="text-2xl font-black">
-                          72%
+                          {regionalAverage}%
                         </div>
 
                         <div className="text-[6px] uppercase tracking-wider text-slate-500">
@@ -963,11 +964,11 @@ export default function Home() {
                         <Icon className="h-5 w-5" />
                       </div>
 
-                      <div className="text-[8px] font-black uppercase text-slate-200">
+                      <div className="text-[10px] font-black uppercase text-slate-200">
                         {feature.title}
                       </div>
 
-                      <div className="text-[7px] font-semibold text-slate-500">
+                      <div className="text-[10px] font-semibold text-slate-500">
                         {feature.subtitle}
                       </div>
 
@@ -996,12 +997,12 @@ export default function Home() {
 
               <p
                 className="
-                  text-[8px]
+                  text-[10px]
                   font-black
                   uppercase
                   tracking-[0.16em]
                   text-sky-300
-                  sm:text-[10px]
+                  sm:text-[12px]
                 "
               >
                 Transparency

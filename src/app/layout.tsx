@@ -15,10 +15,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
         {/* Sky Blue Header Bar */}
-        <header className="bg-[#3f8ec7] border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <header className="bg-[#2fa5b1]  sticky top-0 z-50 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#154c8d] text-white flex items-center justify-center font-black text-sm tracking-tighter shadow-md">
+              <div className="w-10 h-10 rounded-full bg-[#15d8e6] text-white flex items-center justify-center font-black text-sm tracking-tighter shadow-md">
                 UNAP
               </div>
               {/* <div className="flex items-center gap-3">
