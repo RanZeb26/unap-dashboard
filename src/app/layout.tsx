@@ -50,13 +50,13 @@ export default function RootLayout({
         <main className="flex-1 w-full">{children}</main>
 
         {/* Footer */}
-        <footer className="bg-slate-900 text-white border-t border-slate-800 py-8 px-6 text-center text-xs">
+        <footer className="bg-[#2fa5b1] text-white py-8 px-6 text-center text-xs">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-slate-400">
+            <p className="text-white">
               © 2026 United Nations Association of the Philippines (UNAP) & UNA Global. All rights reserved.
             </p>
-            <p className="text-slate-500">
-              Data synchronized with Statista & Kaggle Global SDG Repositories.
+            <p className="text-white">
+              {/* Data synchronized with Statista & Kaggle Global SDG Repositories. */}
             </p>
           </div>
         </footer>

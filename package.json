@@ -9,8 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bootstrap": "^5.3.8",
     "clsx": "^2.1.1",
+    "cors": "^2.8.6",
     "d3-scale": "^4.0.2",
+    "express": "^5.2.1",
     "framer-motion": "^11.3.19",
     "lucide-react": "^0.424.0",
     "mysql2": "^3.24.4",
