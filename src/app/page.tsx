@@ -625,7 +625,7 @@ const router = useRouter();
               >
 
                 <img
-                  src="/images/GOALS.jpg"
+                  src="/images/Goals2.jpg"
                   alt="SDG 17 Partnerships for the Goals"
                   className="
                     h-26 w-auto

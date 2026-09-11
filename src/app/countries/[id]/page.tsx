@@ -84,10 +84,10 @@ export default function CountryDetailsPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
+      <main className="min-h-screen bg-[#2fa5b1] text-white flex items-center justify-center">
         <div className="text-center">
           <div className="w-10 h-10 border-4 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-slate-400">
+          <p className="text-white">
             Loading country data...
           </p>
         </div>
@@ -97,9 +97,9 @@ export default function CountryDetailsPage() {
 
   if (error || !data) {
     return (
-      <main className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
+      <main className="min-h-screen bg-[#2fa5b1] text-white flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-400 mb-4">
+          <p className="text-red-700 mb-4">
             {error || "Country not found"}
           </p>
 
@@ -122,16 +122,16 @@ export default function CountryDetailsPage() {
   } = data;
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <main className="min-h-screen bg-white text-white">
 
       {/* HEADER */}
 
-      <header className="border-b border-white/10 bg-slate-900/80 backdrop-blur">
+      <header className="border-b border-white/10 bg-white backdrop-blur">
         <div className="max-w-7xl mx-auto px-6 py-5">
 
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-slate-400 hover:text-white mb-6"
+            className="flex items-center gap-2 text-slate-400 hover:text-slate-600 mb-6"
           >
             <ArrowLeft size={18} />
             Back to Dashboard
@@ -150,11 +150,11 @@ export default function CountryDetailsPage() {
                 </div>
 
                 <div>
-                  <h1 className="text-3xl font-black">
+                  <h1 className="text-3xl font-black text-slate-950">
                     {country.country_name}
                   </h1>
 
-                  <p className="text-slate-400">
+                  <p className="text-slate-600">
                     {country.iso3} • {country.region_name}
                   </p>
                 </div>
@@ -162,16 +162,28 @@ export default function CountryDetailsPage() {
               </div>
             </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-2xl px-8 py-5">
-              <p className="text-sm text-slate-400">
+            <div>
+              <img
+                  src="/images/GOALS.jpg"
+                  alt="SDG 17 Partnerships for the Goals"
+                  className="
+                    h-56 w-auto
+                    rounded-md
+                    object-contain
+                  "
+                />
+            </div>
+
+            <div className="bg-slate-700 border-x-8 border-amber-400 rounded-2xl px-8 py-5">
+              <p className="text-sm font-black text-[#2fa5b1]">
                 Overall SDG Score
               </p>
 
-              <div className="text-4xl font-black text-sky-400">
+              <div className="text-4xl font-black text-white">
                 {Number(overall_score).toFixed(1)}
               </div>
 
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-xs text-white mt-1">
                 Based on available SDG data
               </p>
             </div>
@@ -189,26 +201,24 @@ export default function CountryDetailsPage() {
         {/* STAT CARDS */}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+          <div className="bg-green-600 border-x-8 border-amber-400 rounded-2xl p-6">
 
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <Target className="text-amber-400 mb-4" />
 
-            <Target className="text-sky-400 mb-4" />
-
-            <p className="text-slate-400 text-sm">
+            <p className="text-white text-sm">
               SDGs Evaluated
             </p>
 
             <p className="text-3xl font-black mt-1">
               {sdgs.length}
             </p>
+</div>
 
-          </div>
+          <div className="bg-blue-700 border-x-8 border-amber-400 rounded-2xl p-6">
 
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <Database className="text-amber-400 mb-4" />
 
-            <Database className="text-emerald-400 mb-4" />
-
-            <p className="text-slate-400 text-sm">
+            <p className="text-white text-sm">
               Indicator Records
             </p>
 
@@ -218,11 +228,11 @@ export default function CountryDetailsPage() {
 
           </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+          <div className="bg-violet-700 border-x-8 border-amber-400 rounded-2xl p-6">
 
-            <BarChart3 className="text-purple-400 mb-4" />
+            <BarChart3 className="text-amber-400 mb-4" />
 
-            <p className="text-slate-400 text-sm">
+            <p className="text-white text-sm">
               Historical Years
             </p>
 
@@ -231,13 +241,12 @@ export default function CountryDetailsPage() {
             </p>
 
           </div>
-
-        </div>
+</div>
 
 
         {/* SDG PERFORMANCE */}
 
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
+        <div className="bg-[#0f8f98] border border-amber-400 rounded-2xl p-6 md:p-8">
 
           <div className="flex items-center justify-between mb-8">
 
@@ -246,7 +255,7 @@ export default function CountryDetailsPage() {
                 SDG Performance
               </h2>
 
-              <p className="text-slate-400 text-sm mt-1">
+              <p className="text-white text-sm mt-1">
                 Performance across the 17 Sustainable Development Goals
               </p>
             </div>
@@ -270,17 +279,18 @@ export default function CountryDetailsPage() {
 
                     <div className="flex gap-3">
 
-                      <div className="w-10 h-10 rounded-lg bg-sky-500/20 flex items-center justify-center font-black text-sky-400">
+                      <div className="w-10 h-10 rounded-lg bg-sky-500/20 flex items-center justify-center font-black text-white">
                         {sdg.goal_number}
                       </div>
 
                       <div>
                         <h3 className="font-bold">
-                          SDG {sdg.goal_number}
+                          {sdg.goal_name}
+                          
                         </h3>
 
-                        <p className="text-sm text-slate-400">
-                          {sdg.goal_name}
+                        <p className="text-sm text-white">
+                          SDG {sdg.goal_number}
                         </p>
                       </div>
 
