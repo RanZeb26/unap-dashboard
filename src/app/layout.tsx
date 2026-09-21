@@ -15,7 +15,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
         {/* Sky Blue Header Bar */}
-        <header className="bg-[#2fa5b1]  sticky top-0 z-50 shadow-sm">
+        <header className="bg-[#1abc9c]  sticky top-0 z-50 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-[#15d8e6] text-white flex items-center justify-center font-black text-sm tracking-tighter shadow-md">
@@ -50,7 +50,7 @@ export default function RootLayout({
         <main className="flex-1 w-full">{children}</main>
 
         {/* Footer */}
-        <footer className="bg-[#2fa5b1] text-white py-8 px-6 text-center text-xs">
+        <footer className="bg-[#1abc9c] py-8 px-6 text-center text-xs">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-white">
               © 2026 United Nations Association of the Philippines (UNAP) & UNA Global. All rights reserved.

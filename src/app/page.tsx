@@ -296,6 +296,7 @@ const features = [
 // -----------------------------------------------------
 
 export default function Home() {
+  const [hoveredSDG, setHoveredSDG] = useState<number | null>(null);
 const router = useRouter();
   const [dashboard, setDashboard] =
     useState<DashboardData | null>(null);
@@ -479,7 +480,7 @@ const router = useRouter();
     <main
       className="
         min-h-screen
-        bg-[#2fa5b1]
+        bg-[#77c136]
         bg-cover
         bg-center
         bg-fixed
@@ -565,44 +566,45 @@ const router = useRouter();
 
               <div className="flex-1 text-center">
 
-                <h1
-                  className="
-                    text-3xl
-                    font-black
-                    uppercase
-                    leading-[0.95]
-                    tracking-tight
-                    text-[#0f8f98]
-                    sm:text-3xl
-                  "
-                >
-                  GLOBAL SDG
-                  <br />
-                  DIGITAL DASHBOARD
-                </h1>
+                <p
+  className="
+    text-[50px]
+    font-black
+    uppercase
+    leading-[0.95]
+    tracking-tight
+    text-[#e73c10]
+    [-webkit-text-stroke:2px_#000000]
+  "
+>
+  GLOBAL SDG
+  <br />
+  DIGITAL DASHBOARD
+</p>
+
+<p
+  className="
+    mt-auto
+    text-center
+    text-xs
+    font-black
+    uppercase
+    tracking-[0.28em]
+    text-[#089faf]
+  "
+>
+  DATA. INSIGHTS. IMPACT.
+</p>
+
 
                 <p
                   className="
-                    mt-3
-                    text-xs
-                    font-black
-                    uppercase
-                    tracking-[0.28em]
-                    text-[#089faf]
-                    sm:text-sm
-                  "
-                >
-                  DATA. INSIGHTS. IMPACT.
-                </p>
-
-                <p
-                  className="
-                    mx-auto mt-3
+                  text-center
+                  mt-auto
                     max-w-2xl
                     text-[11px]
                     leading-relaxed
                     text-[#0f8f98]
-                    sm:text-sm
                   "
                 >
                   A real-time digital platform to monitor, evaluate
@@ -701,7 +703,7 @@ const router = useRouter();
 
                   <span
                     className="
-                      text-[15px]
+                      text-[24px]
                       font-black
                       uppercase
                       tracking-wider
@@ -713,7 +715,7 @@ const router = useRouter();
 
                   <span
                     className="
-                      text-[15px]
+                      text-[1.3rem]
                       font-black
                       text-amber-400
                     "
@@ -873,7 +875,7 @@ const router = useRouter();
 
               text:
                 score !== null
-                  ? `${countryName}: ${score.toFixed(1)}`
+                  ? `${countryName}: Score ${score.toFixed(1)}`
                   : `${countryName}: No data`,
 
               x:
@@ -908,7 +910,7 @@ const router = useRouter();
               fill:
                 score !== null
                   ? getScoreColor(score)
-                  : "#334155",
+                  : "#909bac",
 
               stroke:
                 "#071a36",
@@ -1123,9 +1125,9 @@ const router = useRouter();
                         z-50
                         rounded-md
                         border
-                        border-sky-500
-                        bg-[#071331]
-                        px-2 py-1
+                        border-amber-400
+                        bg-[#063f44]
+                        px-3 py-2
                         text-[9px]
                         font-bold
                         text-white
@@ -1154,7 +1156,7 @@ const router = useRouter();
                 className="
                   rounded-xl
                   border border-amber-400
-                  bg-[#077983]
+                  bg-[#8e44ad]
                   p-4
                 "
               >
@@ -1170,11 +1172,11 @@ const router = useRouter();
 
                   <span
                     className="
-                      text-[11px]
+                      text-[1.4rem]
                       font-black
                       uppercase
                       tracking-wider
-                      text-amber-400
+                      text-[#f2d385]
                     "
                   >
                     Country Rankings
@@ -1221,99 +1223,101 @@ const router = useRouter();
 
                   <div className="space-y-3">
 
-                    {dashboard.rankings
-                      .slice(0, 10)
-                      .map(
-                        (country, index) => (
+  {dashboard.rankings
+    .slice(0, 10)
+    .map((country, index) => (
 
-                          <div
-                            key={
-                              country.country_id
-                            }
-                            className="
-                              flex
-                              items-center
-                              justify-between
-                              border-b
-                              border-slate-700/40
-                              pb-2
-                              transition
-                              hover:bg-sky-500/10
-                            "
-                          >
+      <div
+        key={country.country_id}
+        onClick={() =>
+          router.push(
+            `/countries/${country.country_id}`
+          )
+        }
+        className="
+          flex
+          cursor-pointer
+          items-center
+          justify-between
+          border-b
+          border-slate-700/40
+          pb-2
+          transition
+          duration-200
+          hover:bg-sky-500/20
+          hover:translate-x-1
+          rounded-md
+          px-1
+          py-1
+        "
+      >
 
-                            <div
-                              className="
-                                flex
-                                items-center
-                                gap-2
-                              "
-                            >
+        <div
+          className="
+            flex
+            items-center
+            gap-2
+          "
+        >
 
-                              <span
-                                className={`
-                                  w-4
-                                  text-center
-                                  text-[12px]
-                                  font-black
-                                  ${
-                                    index === 0
-                                      ? "text-amber-400"
-                                      : "text-white"
-                                  }
-                                `}
-                              >
-                                {index + 1}
-                              </span>
+          <span
+            className={`
+              w-4
+              text-center
+              text-[12px]
+              font-black
+              ${
+                index === 0
+                  ? "text-amber-400"
+                  : "text-white"
+              }
+            `}
+          >
+            {index + 1}
+          </span>
 
-                              <div>
+          <div>
 
-                                <div
-                                  className="
-                                    text-[12px]
-                                    font-semibold
-                                    text-white
-                                  "
-                                >
-                                  {
-                                    country.country_name
-                                  }
-                                </div>
+            <div
+              className="
+                text-[18px]
+                font-semibold
+                text-white
+              "
+            >
+              {country.country_name}
+            </div>
 
-                                <div
-                                  className="
-                                    text-[9px]
-                                    text-amber-400
-                                  "
-                                >
-                                  {country.iso3}
-                                </div>
+            <div
+              className="
+                text-[9px]
+                text-amber-400
+              "
+            >
+              {country.iso3}
+            </div>
 
-                              </div>
+          </div>
 
-                            </div>
+        </div>
 
+        <span
+          className="
+            text-[12px]
+            font-black
+            text-white
+          "
+        >
+          {country.score !== null
+            ? Number(country.score).toFixed(1)
+            : "N/A"}
+        </span>
 
-                            <span
-                              className="
-                                text-[12px]
-                                font-black
-                                text-white
-                              "
-                            >
-                              {country.score !== null
-                                ? Number(
-                                    country.score
-                                  ).toFixed(1)
-                                : "N/A"}
-                            </span>
+      </div>
 
-                          </div>
+    ))}
 
-                        )
-                      )}
-
-                  </div>
+</div>
 
                 )}
 
@@ -1340,159 +1344,279 @@ const router = useRouter();
                   SDG PERFORMANCE
               ================================================= */}
 
+<div
+  className="
+    min-h-[220px]
+    rounded-xl
+    border border-amber-400
+    bg-[#bdc3c7]
+    p-4
+  "
+>
+  {/* HEADER */}
+  <div className="flex items-center justify-between">
+    <span
+      className="
+        text-[12px]
+        font-black
+        uppercase
+        tracking-wider
+        text-[#263667]
+      "
+    >
+      SDG Performance
+      <br />
+      By Goal
+    </span>
+
+    <BarChart3 className="h-4 w-4 text-amber-400" />
+  </div>
+
+  {/* CHART */}
+  <div className="mt-5 flex h-[145px]">
+
+    {/* Y AXIS */}
+    <div
+      className="
+        flex
+        w-7
+        flex-col
+        justify-between
+        pb-5
+        pr-1
+        text-right
+        text-[12px]
+        font-semibold
+        text-[#263667]
+      "
+    >
+      <span>100</span>
+      <span>80</span>
+      <span>60</span>
+      <span>40</span>
+      <span>20</span>
+      <span>0</span>
+    </div>
+
+    {/* GRAPH AREA */}
+    <div className="relative flex-1">
+
+      {/* GRID LINES */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-x-0
+          top-0
+          bottom-5
+          flex
+          flex-col
+          justify-between
+        "
+      >
+        {[100, 80, 60, 40, 20, 0].map((line) => (
+          <div
+            key={line}
+            className="
+              w-full
+              border-t
+              border-white/25
+            "
+          />
+        ))}
+      </div>
+
+      {/* BARS */}
+      <div
+        className="
+          relative
+          z-10
+          flex
+          h-full
+          items-end
+          justify-between
+          gap-1
+          px-1
+        "
+      >
+
+        {loading ? (
+
+          <div className="flex w-full items-center justify-center pb-8 text-xs text-white">
+            Loading...
+          </div>
+
+        ) : dashboard?.sdgs &&
+          dashboard.sdgs.length > 0 ? (
+
+          dashboard.sdgs.map((item) => {
+
+            const value =
+              Number(item.average_score) || 0;
+
+            const sdgColors: Record<number, string> = {
+              1: "#E5243B",
+              2: "#DDA63A",
+              3: "#4C9F38",
+              4: "#C5192D",
+              5: "#FF3A21",
+              6: "#26BDE2",
+              7: "#FCC30B",
+              8: "#A21942",
+              9: "#FD6925",
+              10: "#DD1367",
+              11: "#FD9D24",
+              12: "#BF8B2E",
+              13: "#3F7E44",
+              14: "#0A97D9",
+              15: "#56C02B",
+              16: "#00689D",
+              17: "#19486A",
+            };
+
+            const barColor =
+              sdgColors[item.goal_number] || "#38bdf8";
+
+            return (
               <div
+                key={item.goal_id}
                 className="
-                  min-h-[180px]
-                  rounded-xl
-                  border border-amber-400
-                  bg-[#077983]
-                  p-4
+                  flex
+                  h-full
+                  min-w-0
+                  flex-1
+                  flex-col
+                  items-center
+                  justify-end
                 "
               >
 
-                <div
+{/* BAR + VALUE */}
+<div
+  className="
+    relative
+    flex
+    w-full
+    flex-1
+    items-end
+  "
+>
+  {/* TOOLTIP */}
+  {hoveredSDG === item.goal_id && (
+    <div
+      className="
+        absolute
+        bottom-full
+        left-1/2
+        z-50
+        mb-2
+        -translate-x-1/2
+        whitespace-nowrap
+        rounded-lg
+        border
+        border-amber-400
+        bg-[#063f44]
+        px-3
+        py-2
+        text-[10px]
+        shadow-xl
+      "
+    >
+      <div className="font-black text-[white]">
+        SDG {item.goal_number}
+      </div>
+
+      <div className="mt-1 flex items-center gap-1">
+        <span
+          className="h-2 w-2 rounded-full"
+          style={{
+            backgroundColor: barColor,
+          }}
+        />
+
+        <span className="text-white/80">
+          Score:
+        </span>
+
+        <span className="font-bold text-amber-400">
+          {value.toFixed(1)}
+        </span>
+      </div>
+    </div>
+  )}
+
+  {/* VALUE LABEL */}
+  <span
+    className="
+      absolute
+      left-1/2
+      -translate-x-1/2
+      text-[15px]
+      font-bold
+      text-[#0876d8]
+    "
+    style={{
+      bottom: `${Math.min(value, 100)}%`,
+      transform: "translate(-50%, 4px)",
+    }}
+  >
+    {value.toFixed(0)}
+  </span>
+
+  {/* BAR */}
+  <div
+    className="
+      w-full
+      cursor-pointer
+      rounded-t-sm
+      transition-all
+      duration-200
+      hover:brightness-110
+      hover:scale-x-105
+    "
+    style={{
+      backgroundColor: barColor,
+      height: `${Math.min(value, 100)}%`,
+    }}
+    onMouseEnter={() =>
+      setHoveredSDG(item.goal_id)
+    }
+    onMouseLeave={() =>
+      setHoveredSDG(null)
+    }
+  />
+</div>
+
+                {/* X AXIS LABEL */}
+                <span
                   className="
-                    flex
-                    items-center
-                    justify-between
+                    mt-1
+                    text-center
+                    text-[12px]
+                    font-bold
+                    text-[#263667]
                   "
                 >
-
-                  <span
-                    className="
-                      text-[12px]
-                      font-black
-                      uppercase
-                      tracking-wider
-                      text-amber-400
-                    "
-                  >
-                    SDG Performance
-                    <br />
-                    By Goal
-                  </span>
-
-                  <BarChart3
-                    className="
-                      h-4 w-4
-                      text-amber-400
-                    "
-                  />
-
-                </div>
-
-
-                <div
-                  className="
-                    mt-6
-                    flex
-                    h-28
-                    items-end
-                    justify-between
-                    gap-2
-                    px-2
-                  "
-                >
-
-                  {loading ? (
-
-                    <div className="flex w-full items-center justify-center text-xs text-white">
-                      Loading...
-                    </div>
-
-                  ) : dashboard?.sdgs &&
-                    dashboard.sdgs.length > 0 ? (
-
-                    dashboard.sdgs.map(
-                      (item) => {
-
-                        const value =
-                          Number(
-                            item.average_score
-                          ) || 0;
-// Mapping official SDG colors or an alternating palette based on the goal number
-const sdgColors = {
-1: "#E5243B",  // No Poverty
-2: "#DDA63A",  // Zero Hunger
-3: "#4C9F38",  // Good Health
-4: "#C5192D",  // Quality Education
-5: "#FF3A21",  // Gender Equality
-6: "#26BDE2",  // Clean Water
-7: "#FCC30B",  // Affordable/Clean Energy
-8: "#A21942",  // Decent Work
-9: "#FD6925",  // Industry & Innovation
-10: "#DD1367", // Reduced Inequalities
-11: "#FD9D24", // Sustainable Cities
-12: "#BF8B2E", // Responsible Consumption
-13: "#3F7E44", // Climate Action
-14: "#0A97D9", // Life Below Water
-15: "#56C02B", // Life on Land
-16: "#00689D", // Peace & Justice
-17: "#19486A", // Partnerships
-};// Fallback color if the goal_number isn't 1-17
-const barColor = sdgColors[item.goal_number] || "#38bdf8";
-                        return (
-
-                          <div
-                            key={
-                              item.goal_id
-                            }
-                            className="
-                              flex
-                              h-full
-                              flex-1
-                              flex-col
-                              justify-end
-                            "
-                          >
-
-                            <div
-                              className="
-                                w-full
-                                rounded-t-sm
-                                transition-all
-                                hover:opacity-80
-                              "
-                              style={{
-                                backgroundColor:barColor,
-                                height:
-                                  `${Math.min(
-                                    value,
-                                    100
-                                  )}%`,
-                              }}
-                              title={`SDG ${item.goal_number}: ${value.toFixed(1)}`}
-                            />
-
-                            <span
-                              className="
-                                mt-1
-                                text-center
-                                text-[12px]
-                                text-white
-                              "
-                            >
-                              {item.goal_number}
-                            </span>
-
-                          </div>
-
-                        );
-
-                      }
-                    )
-
-                  ) : (
-
-                    <div className="w-full text-center text-xs text-white">
-                      No SDG data available
-                    </div>
-
-                  )}
-
-                </div>
+                  {item.goal_number}
+                </span>
 
               </div>
+            );
+          })
+
+        ) : (
+
+          <div className="flex w-full items-center justify-center pb-8 text-xs text-white">
+            No SDG data available
+          </div>
+
+        )}
+
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
               {/* =================================================
@@ -1504,7 +1628,7 @@ const barColor = sdgColors[item.goal_number] || "#38bdf8";
                   min-h-[180px]
                   rounded-xl
                   border border-amber-400
-                  bg-[#077983]
+                  bg-[#1b963b]
                   p-4
                 "
               >
@@ -1546,7 +1670,7 @@ const barColor = sdgColors[item.goal_number] || "#38bdf8";
                     overflow-hidden
                     rounded-lg
                     border border-amber-400
-                    bg-[#077983]
+                    bg-[#1b963b]
                     p-2
                   "
                 >
@@ -1630,7 +1754,7 @@ const barColor = sdgColors[item.goal_number] || "#38bdf8";
                   min-h-[180px]
                   rounded-xl
                   border border-amber-400
-                  bg-[#077983]
+                  bg-[#e5243b]
                   p-4
                 "
               >
@@ -1726,7 +1850,7 @@ const barColor = sdgColors[item.goal_number] || "#38bdf8";
                 DATA SUMMARY
             ================================================= */}
 
-            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {/* <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
 
               <div
                 className="
@@ -1802,7 +1926,7 @@ const barColor = sdgColors[item.goal_number] || "#38bdf8";
 
               </div>
 
-            </div>
+            </div> */}
 
 
             {/* =================================================
@@ -1872,7 +1996,7 @@ const barColor = sdgColors[item.goal_number] || "#38bdf8";
                           className="
                             mb-2
                             flex
-                            h-9 w-9
+                            h-20 w-20
                             items-center
                             justify-center
                             rounded-lg
@@ -1888,7 +2012,7 @@ const barColor = sdgColors[item.goal_number] || "#38bdf8";
 
                           <Icon
                             className="
-                              h-5 w-5
+                              h-40 w-40
                             "
                           />
 
@@ -1896,8 +2020,8 @@ const barColor = sdgColors[item.goal_number] || "#38bdf8";
 
                         <div
                           className="
-                            text-[10px]
-                            font-black
+                            text-[15px]
+                            font-semibold
                             uppercase
                             text-white
                           "
@@ -1907,8 +2031,9 @@ const barColor = sdgColors[item.goal_number] || "#38bdf8";
 
                         <div
                           className="
-                            text-[10px]
+                            text-[15px]
                             font-semibold
+                            uppercase
                             text-white
                           "
                         >
@@ -1935,8 +2060,6 @@ const barColor = sdgColors[item.goal_number] || "#38bdf8";
               className="
                 mt-4
                 rounded-lg
-                border border-amber-400
-                bg-[#077983]
                 px-3 py-3
                 text-center
               "
@@ -1953,6 +2076,7 @@ const barColor = sdgColors[item.goal_number] || "#38bdf8";
                 "
               >
 
+
                 Transparency
 
                 <span className="mx-2 text-amber-400">
@@ -1968,7 +2092,17 @@ const barColor = sdgColors[item.goal_number] || "#38bdf8";
                 Evidence-Based Decisions
 
               </p>
-
+                <img
+                  src="/images/SDGS Strip.jpg"
+                  alt="United Nations Association of the Philippines"
+                  className="
+                    h-26 w-full
+                    rounded-lg
+                    object-contain
+                    brightness-110
+                    zindex-10
+                  "
+                />
             </footer>
 
           </section>
