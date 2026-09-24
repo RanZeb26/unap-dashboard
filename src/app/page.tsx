@@ -4,6 +4,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   BarChart3,
+  ZoomIn, 
+  ZoomOut, 
+  RotateCcw,
   Globe2,
   Map,
   Users,
@@ -13,9 +16,10 @@ import {
 } from "lucide-react";
 
 import {
-  ComposableMap,
+ComposableMap,
   Geographies,
   Geography,
+  ZoomableGroup,
 } from "react-simple-maps";
 
 // -----------------------------------------------------
@@ -322,6 +326,31 @@ const router = useRouter();
     y: 0,
   });
 
+const [mapPosition, setMapPosition] = useState({
+  coordinates: [0, 0] as [number, number],
+  zoom: 1,
+});
+
+const zoomIn = () => {
+  setMapPosition((prev) => ({
+    ...prev,
+    zoom: Math.min(prev.zoom * 1.4, 8),
+  }));
+};
+
+const zoomOut = () => {
+  setMapPosition((prev) => ({
+    ...prev,
+    zoom: Math.max(prev.zoom / 1.4, 1),
+  }));
+};
+
+const resetMap = () => {
+  setMapPosition({
+    coordinates: [0, 0],
+    zoom: 1,
+  });
+};
   // --------------------------------------------------
   // LOAD DASHBOARD DATA
   // --------------------------------------------------
@@ -731,56 +760,68 @@ const router = useRouter();
                 ================================================= */}
 
                 <div
-                  className="
-                    relative mt-4
-                    h-[280px]
-                    w-full
-                    flex-1
-                    overflow-hidden
-                    rounded-lg
-                    border border-amber-400
-                    bg-[#077983]
-                    sm:h-[340px]
-                    md:h-[380px]
-                  "
-                >
+  className="
+    relative mt-4
+    h-[210px]
+    w-full
+    flex-1
+    overflow-hidden
+    rounded-lg
+    border border-amber-400
+    bg-[#077983]
+    sm:h-[340px]
+    md:h-[380px]
+  "
+>
+  {/* Background */}
 
-                  {/* Background */}
+  <div
+    className="
+      pointer-events-none
+      absolute inset-0
+      bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.18),transparent_65%)]
+    "
+  />
 
-                  <div
-                    className="
-                      pointer-events-none
-                      absolute inset-0
-                      bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.18),transparent_65%)]
-                    "
-                  />
+  {/* Grid */}
 
-                  {/* Grid */}
+  <div
+    className="
+      pointer-events-none
+      absolute inset-0
+      z-10
+      opacity-20
+      [background-image:linear-gradient(rgba(50,150,255,.2)_1px,transparent_1px),linear-gradient(90deg,rgba(50,150,255,.2)_1px,transparent_1px)]
+      [background-size:25px_25px]
+    "
+  />
 
-                  <div
-                    className="
-                      pointer-events-none
-                      absolute inset-0
-                      z-10
-                      opacity-20
-                      [background-image:linear-gradient(rgba(50,150,255,.2)_1px,transparent_1px),linear-gradient(90deg,rgba(50,150,255,.2)_1px,transparent_1px)]
-                      [background-size:25px_25px]
-                    "
-                  />
+  {/* MAP */}
 
-
-                  {/* MAP */}
-
-                  <ComposableMap
-                    projection="geoEqualEarth"
-                    projectionConfig={{
-                      scale: 230,
-                    }}
-                    className="
-                      absolute inset-0
-                      h-full w-full
-                    "
-                  >
+  <ComposableMap
+    projection="geoEqualEarth"
+    projectionConfig={{
+      scale: 210,
+    }}
+    className="
+      absolute
+      inset-0
+      h-full
+      w-full
+    "
+  >
+    <ZoomableGroup
+      zoom={mapPosition.zoom}
+      center={mapPosition.coordinates}
+      minZoom={1}
+      maxZoom={8}
+      onMove={({ coordinates, zoom }) => {
+        setMapPosition({
+          coordinates,
+          zoom,
+        });
+      }}
+    >
 
                     <Geographies
   geography="/world-110m.json"
@@ -962,8 +1003,132 @@ const router = useRouter();
     })
   }
 </Geographies>
+</ZoomableGroup>
                   </ComposableMap>
+ {/* MAP CONTROLS */}
 
+  <div
+    className="
+      absolute
+      right-3
+      top-3
+      z-30
+      flex
+      flex-col
+      overflow-hidden
+      rounded-lg
+      border
+      border-amber-400
+      bg-[#05636b]/95
+      shadow-xl
+      backdrop-blur-sm
+    "
+  >
+
+    {/* ZOOM IN */}
+
+    <button
+      type="button"
+      onClick={zoomIn}
+      className="
+        flex
+        h-10
+        w-10
+        items-center
+        justify-center
+        text-white
+        transition
+        hover:bg-[#0f8f98]
+        active:scale-90
+      "
+      title="Zoom in"
+      aria-label="Zoom in"
+    >
+      <ZoomIn size={19} />
+    </button>
+
+
+    {/* DIVIDER */}
+
+    <div className="h-px bg-amber-400/50" />
+
+
+    {/* ZOOM OUT */}
+
+    <button
+      type="button"
+      onClick={zoomOut}
+      className="
+        flex
+        h-10
+        w-10
+        items-center
+        justify-center
+        text-white
+        transition
+        hover:bg-[#0f8f98]
+        active:scale-90
+      "
+      title="Zoom out"
+      aria-label="Zoom out"
+    >
+      <ZoomOut size={19} />
+    </button>
+
+
+    {/* DIVIDER */}
+
+    <div className="h-px bg-amber-400/50" />
+
+
+    {/* RESET */}
+
+    <button
+      type="button"
+      onClick={resetMap}
+      className="
+        flex
+        h-10
+        w-10
+        items-center
+        justify-center
+        text-white
+        transition
+        hover:bg-[#0f8f98]
+        active:scale-90
+      "
+      title="Reset map"
+      aria-label="Reset map"
+    >
+      <RotateCcw size={17} />
+    </button>
+
+  </div>
+
+
+  {/* ZOOM LEVEL */}
+
+  <div
+    className="
+      absolute
+      bottom-3
+      right-3
+      z-30
+      rounded-md
+      border
+      border-amber-400/70
+      bg-[#05636b]/90
+      px-2
+      py-1
+      text-[10px]
+      font-bold
+      tracking-wider
+      text-white
+      backdrop-blur-sm
+    "
+  >
+    {mapPosition.zoom.toFixed(1)}×
+  </div>
 
                   {/* =================================================
                       LEGEND
