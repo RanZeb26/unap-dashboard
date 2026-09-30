@@ -293,8 +293,129 @@ const features = [
     title: "AI-Driven",
     subtitle: "Insights",
   },
+  
 ];
-
+const sdgs = [
+  {
+    id: 1,
+    color: "#E5243B",
+    title: "No Poverty",
+    description:
+      "End poverty in all its forms everywhere.",
+  },
+  {
+    id: 2,
+    color: "#DDA63A",
+    title: "Zero Hunger",
+    description:
+      "End hunger, achieve food security and improved nutrition and promote sustainable agriculture.",
+  },
+  {
+    id: 3,
+    color: "#4C9F38",
+    title: "Good Health and Well-being",
+    description:
+      "Ensure healthy lives and promote well-being for all at all ages.",
+  },
+  {
+    id: 4,
+    color: "#C5192D",
+    title: "Quality Education",
+    description:
+      "Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all.",
+  },
+  {
+    id: 5,
+    color: "#FF3A21",
+    title: "Gender Equality",
+    description:
+      "Achieve gender equality and empower all women and girls.",
+  },
+  {
+    id: 6,
+    color: "#26BDE2",
+    title: "Clean Water and Sanitation",
+    description:
+      "Ensure availability and sustainable management of water and sanitation for all.",
+  },
+  {
+    id: 7,
+    color: "#FCC30B",
+    title: "Affordable and Clean Energy",
+    description:
+      "Ensure access to affordable, reliable, sustainable and modern energy for all.",
+  },
+  {
+    id: 8,
+    color: "#A21942",
+    title: "Decent Work and Economic Growth",
+    description:
+      "Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all.",
+  },
+  {
+    id: 9,
+    color: "#FD6925",
+    title: "Industry, Innovation and Infrastructure",
+    description:
+      "Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation.",
+  },
+  {
+    id: 10,
+    color: "#DD1367",
+    title: "Reduced Inequalities",
+    description:
+      "Reduce inequality within and among countries.",
+  },
+  {
+    id: 11,
+    color: "#FD9D24",
+    title: "Sustainable Cities and Communities",
+    description:
+      "Make cities and human settlements inclusive, safe, resilient and sustainable.",
+  },
+  {
+    id: 12,
+    color: "#BF8B2E",
+    title: "Responsible Consumption and Production",
+    description:
+      "Ensure sustainable consumption and production patterns.",
+  },
+  {
+    id: 13,
+    color: "#3F7E44",
+    title: "Climate Action",
+    description:
+      "Take urgent action to combat climate change and its impacts.",
+  },
+  {
+    id: 14,
+    color: "#0A97D9",
+    title: "Life Below Water",
+    description:
+      "Conserve and sustainably use the oceans, seas and marine resources for sustainable development.",
+  },
+  {
+    id: 15,
+    color: "#56C02B",
+    title: "Life on Land",
+    description:
+      "Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification and halt biodiversity loss.",
+  },
+  {
+    id: 16,
+    color: "#00689D",
+    title: "Peace, Justice and Strong Institutions",
+    description:
+      "Promote peaceful and inclusive societies, provide access to justice for all and build effective, accountable and inclusive institutions.",
+  },
+  {
+    id: 17,
+    color: "#19486A",
+    title: "Partnerships for the Goals",
+    description:
+      "Strengthen the means of implementation and revitalize the global partnership for sustainable development.",
+  },
+];
 // -----------------------------------------------------
 // COMPONENT
 // -----------------------------------------------------
@@ -509,7 +630,7 @@ const resetMap = () => {
     <main
       className="
         min-h-screen
-        bg-[#77c136]
+        bg-[#1abc9c]
         bg-cover
         bg-center
         bg-fixed
@@ -1107,12 +1228,11 @@ const resetMap = () => {
 
 
   {/* ZOOM LEVEL */}
-
   <div
     className="
       absolute
       bottom-3
-      right-3
+      left-3
       z-30
       rounded-md
       border
@@ -1784,130 +1904,516 @@ const resetMap = () => {
 </div>
 
 
-              {/* =================================================
-                  IMPACT HEAT MAP
-              ================================================= */}
+{/* =================================================
+    IMPACT HEAT MAP
+================================================= */}
 
-              <div
-                className="
-                  min-h-[180px]
-                  rounded-xl
-                  border border-amber-400
-                  bg-[#1b963b]
-                  p-4
-                "
-              >
+<div
+  className="
+    min-h-[180px]
+    rounded-xl
+    border border-amber-400
+    bg-[#1b963b]
+    p-4
+  "
+>
+  {/* HEADER */}
+  <div
+    className="
+      flex
+      items-center
+      justify-between
+    "
+  >
+    <span
+      className="
+        text-[12px]
+        font-black
+        uppercase
+        tracking-wider
+        text-amber-400
+      "
+    >
+      Impact Heat Map
+    </span>
 
-                <div
-                  className="
-                    flex
-                    items-center
-                    justify-between
-                  "
-                >
-
-                  <span
-                    className="
-                      text-[12px]
-                      font-black
-                      uppercase
-                      tracking-wider
-                      text-amber-400
-                    "
-                  >
-                    Impact Heat Map
-                  </span>
-
-                  <Map
-                    className="
-                      h-4 w-4
-                      text-amber-400
-                    "
-                  />
-
-                </div>
+    <Map
+      className="
+        h-4 w-4
+        text-amber-400
+      "
+    />
+  </div>
 
 
-                <div
-                  className="
-                    mt-4
-                    h-[115px]
-                    overflow-hidden
-                    rounded-lg
-                    border border-amber-400
-                    bg-[#1b963b]
-                    p-2
-                  "
-                >
+  {/* MAP */}
+  <div
+    className="
+      relative
+      mt-4
+      h-[180px]
+      overflow-hidden
+      rounded-lg
+      border border-amber-400
+      bg-[#077983]
+      sm:h-[220px]
+      lg:h-[240px]
+    "
+  >
 
-                  <div
-                    className="
-                      grid
-                      h-full
-                      grid-cols-10
-                      gap-[2px]
-                    "
-                  >
+    <ComposableMap
+      projection="geoEqualEarth"
+      projectionConfig={{
+        scale: 145,
+      }}
+      width={800}
+      height={400}
+      className="h-full w-full"
+    >
 
-                    {Array.from({
-                      length: 100,
-                    }).map(
-                      (_, i) => {
+      <Geographies geography="/world-110m.json">
 
-                        /*
-                         * Use real SDG scores
-                         * to generate the heat cells.
-                         */
+        {({ geographies }) =>
+          geographies.map((geo) => {
 
-                        const score =
-                          dashboard?.rankings?.[
-                            i %
-                              Math.max(
-                                dashboard
-                                  ?.rankings
-                                  ?.length || 1,
-                                1
-                              )
-                          ]?.score;
+            /*
+             * Get ISO3 code from the map
+             */
+const numericId = String(geo.id).padStart(3, "0");
 
-                        const intensity =
-                          score !== null &&
-                          score !== undefined
-                            ? Number(score)
-                            : 20;
+const numericToIso3: Record<string, string> = {
+  "004": "AFG",
+  "008": "ALB",
+  "012": "DZA",
+  "024": "AGO",
+  "032": "ARG",
+  "036": "AUS",
+  "040": "AUT",
+  "050": "BGD",
+  "056": "BEL",
+  "068": "BOL",
+  "076": "BRA",
+  "084": "BLZ",
+  "096": "BRN",
+  "100": "BGR",
+  "104": "MMR",
+  "108": "BDI",
+  "116": "KHM",
+  "120": "CMR",
+  "124": "CAN",
+  "132": "CPV",
+  "140": "CAF",
+  "144": "LKA",
+  "148": "TCD",
+  "152": "CHL",
+  "156": "CHN",
+  "158": "TWN",
+  "170": "COL",
+  "174": "COM",
+  "178": "COG",
+  "180": "COD",
+  "188": "CRI",
+  "191": "HRV",
+  "192": "CUB",
+  "196": "CYP",
+  "203": "CZE",
+  "204": "BEN",
+  "208": "DNK",
+  "214": "DOM",
+  "218": "ECU",
+  "222": "SLV",
+  "226": "GNQ",
+  "231": "ETH",
+  "232": "ERI",
+  "233": "EST",
+  "238": "FLK",
+  "242": "FJI",
+  "246": "FIN",
+  "250": "FRA",
+  "262": "DJI",
+  "268": "GEO",
+  "270": "GMB",
+  "275": "PSE",
+  "276": "DEU",
+  "288": "GHA",
+  "300": "GRC",
+  "320": "GTM",
+  "324": "GIN",
+  "328": "GUY",
+  "332": "HTI",
+  "340": "HND",
+  "348": "HUN",
+  "352": "ISL",
+  "356": "IND",
+  "360": "IDN",
+  "364": "IRN",
+  "368": "IRQ",
+  "372": "IRL",
+  "376": "ISR",
+  "380": "ITA",
+  "384": "CIV",
+  "388": "JAM",
+  "392": "JPN",
+  "398": "KAZ",
+  "400": "JOR",
+  "404": "KEN",
+  "408": "PRK",
+  "410": "KOR",
+  "414": "KWT",
+  "417": "KGZ",
+  "418": "LAO",
+  "422": "LBN",
+  "426": "LSO",
+  "428": "LVA",
+  "430": "LBR",
+  "434": "LBY",
+  "438": "LIE",
+  "440": "LTU",
+  "442": "LUX",
+  "450": "MDG",
+  "454": "MWI",
+  "458": "MYS",
+  "466": "MLI",
+  "470": "MLT",
+  "478": "MRT",
+  "480": "MUS",
+  "484": "MEX",
+  "496": "MNG",
+  "498": "MDA",
+  "499": "MNE",
+  "504": "MAR",
+  "508": "MOZ",
+  "516": "NAM",
+  "524": "NPL",
+  "528": "NLD",
+  "531": "CUW",
+  "540": "NCL",
+  "548": "VUT",
+  "554": "NZL",
+  "558": "NIC",
+  "562": "NER",
+  "566": "NGA",
+  "578": "NOR",
+  "586": "PAK",
+  "591": "PAN",
+  "598": "PNG",
+  "600": "PRY",
+  "604": "PER",
+  "608": "PHL",
+  "616": "POL",
+  "620": "PRT",
+  "624": "GNB",
+  "626": "TLS",
+  "630": "PRI",
+  "634": "QAT",
+  "643": "RUS",
+  "646": "RWA",
+  "682": "SAU",
+  "686": "SEN",
+  "688": "SRB",
+  "694": "SLE",
+  "704": "VNM",
+  "705": "SVN",
+  "706": "SOM",
+  "710": "ZAF",
+  "716": "ZWE",
+  "724": "ESP",
+  "728": "SSD",
+  "729": "SDN",
+  "740": "SUR",
+  "748": "SWZ",
+  "752": "SWE",
+  "756": "CHE",
+  "762": "TJK",
+  "764": "THA",
+  "768": "TGO",
+  "780": "TTO",
+  "784": "ARE",
+  "788": "TUN",
+  "792": "TUR",
+  "795": "TKM",
+  "800": "UGA",
+  "804": "UKR",
+  "807": "MKD",
+  "818": "EGY",
+  "826": "GBR",
+  "834": "TZA",
+  "840": "USA",
+  "854": "BFA",
+  "858": "URY",
+  "860": "UZB",
+  "862": "VEN",
+  "887": "YEM",
+  "894": "ZMB",
+};
 
-                        const opacity =
-                          Math.max(
-                            0.15,
-                            Math.min(
-                              intensity / 100,
-                              1
-                            )
-                          );
+            /*
+             * Find matching country
+             * from dashboard rankings
+             */
+const iso3 = numericToIso3[numericId];
 
-                        return (
+            const country =
+              dashboard?.rankings?.find(
+                (item: any) =>
+                  item.iso3?.toUpperCase() ===
+                  iso3?.toUpperCase()
+              );
 
-                          <div
-                            key={i}
-                            className="
-                              rounded-[1px]
-                              bg-orange-500
-                            "
-                            style={{
-                              opacity,
-                            }}
-                          />
 
-                        );
+            /*
+             * Country score
+             */
+            const score =
+              country?.score !== null &&
+              country?.score !== undefined
+                ? Number(country.score)
+                : null;
 
-                      }
-                    )}
 
-                  </div>
+            /*
+             * SDG impact color
+             */
+            let fill = "#374151";
 
-                </div>
+            if (score !== null) {
 
-              </div>
+              if (score >= 80) {
+                fill = "#16a34a";
+              }
+              else if (score >= 70) {
+                fill = "#84cc16";
+              }
+              else if (score >= 60) {
+                fill = "#facc15";
+              }
+              else if (score >= 40) {
+                fill = "#f97316";
+              }
+              else {
+                fill = "#dc2626";
+              }
+
+            }
+
+
+            return (
+              <Geography
+                key={geo.rsmKey}
+                geography={geo}
+
+                fill={fill}
+
+                stroke="#ffffff"
+                strokeWidth={0.35}
+
+                onClick={() => {
+
+                  /*
+                   * Only navigate if
+                   * country exists in database
+                   */
+                  if (country?.country_id) {
+
+                    router.push(
+                      `/countries/${country.country_id}`
+                    );
+
+                  }
+
+                }}
+
+                style={{
+                  default: {
+                    outline: "none",
+                    transition:
+                      "all 0.2s ease",
+                  },
+
+                  hover: {
+                    fill: "#fbbf24",
+                    outline: "none",
+                    cursor:
+                      country
+                        ? "pointer"
+                        : "default",
+                    transform:
+                      country
+                        ? "scale(1.015)"
+                        : "none",
+                  },
+
+                  pressed: {
+                    outline: "none",
+                  },
+                }}
+              />
+            );
+
+          })
+        }
+
+      </Geographies>
+
+    </ComposableMap>
+
+
+    {/* =================================================
+        LEGEND
+    ================================================= */}
+
+    <div
+      className="
+        absolute
+        bottom-2
+        left-2
+        rounded-md
+        border
+        border-white/30
+        bg-black/50
+        px-2
+        py-1.5
+        backdrop-blur-sm
+      "
+    >
+
+      <div
+        className="
+          mb-1
+          text-[8px]
+          font-black
+          uppercase
+          tracking-wider
+          text-white
+        "
+      >
+        SDG Impact
+      </div>
+
+      <div
+        className="
+          flex
+          items-center
+          gap-2
+        "
+      >
+
+        {/* <40 */}
+        <div className="flex items-center gap-1">
+          <span
+            className="
+              h-2
+              w-2
+              rounded-sm
+              bg-red-600
+            "
+          />
+          <span
+            className="
+              text-[7px]
+              font-bold
+              text-white
+            "
+          >
+            &lt;40
+          </span>
+        </div>
+
+
+        {/* 40–59 */}
+        <div className="flex items-center gap-1">
+          <span
+            className="
+              h-2
+              w-2
+              rounded-sm
+              bg-orange-500
+            "
+          />
+          <span
+            className="
+              text-[7px]
+              font-bold
+              text-white
+            "
+          >
+            40–59
+          </span>
+        </div>
+
+
+        {/* 60–69 */}
+        <div className="flex items-center gap-1">
+          <span
+            className="
+              h-2
+              w-2
+              rounded-sm
+              bg-yellow-400
+            "
+          />
+          <span
+            className="
+              text-[7px]
+              font-bold
+              text-white
+            "
+          >
+            60–69
+          </span>
+        </div>
+
+
+        {/* 70–79 */}
+        <div className="flex items-center gap-1">
+          <span
+            className="
+              h-2
+              w-2
+              rounded-sm
+              bg-lime-500
+            "
+          />
+          <span
+            className="
+              text-[7px]
+              font-bold
+              text-white
+            "
+          >
+            70–79
+          </span>
+        </div>
+
+
+        {/* 80+ */}
+        <div className="flex items-center gap-1">
+          <span
+            className="
+              h-2
+              w-2
+              rounded-sm
+              bg-green-600
+            "
+          />
+          <span
+            className="
+              text-[7px]
+              font-bold
+              text-white
+            "
+          >
+            80+
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
 
               {/* =================================================
@@ -2257,17 +2763,55 @@ const resetMap = () => {
                 Evidence-Based Decisions
 
               </p>
-                <img
-                  src="/images/SDGS Strip.jpg"
-                  alt="United Nations Association of the Philippines"
-                  className="
-                    h-26 w-full
-                    rounded-lg
-                    object-contain
-                    brightness-110
-                    zindex-10
-                  "
-                />
+                <div className="w-full overflow-hidden rounded-lg border border-amber-400">
+  <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-9 xl:grid-cols-17">
+    {sdgs.map((sdg) => (
+      <div
+  key={sdg.id}
+  className="
+    group
+    relative
+    min-h-[75px]
+    p-2
+    text-white
+    transition-all
+    duration-200
+    hover:z-10
+    hover:scale-[1.03]
+    hover:brightness-110
+  "
+  style={{
+    backgroundColor: sdg.color,
+  }}
+>
+  {/* Number */}
+  <div className="text-lg font-black leading-none">
+    {String(sdg.id).padStart(2, "0")}
+  </div>
+
+  {/* Title */}
+  <div className="mt-1 text-[9px] font-black uppercase leading-tight">
+    {sdg.title}
+  </div>
+
+  {/* Description */}
+  <div
+    className="
+      mt-1
+      text-[8px]
+      leading-tight
+      opacity-0
+      transition-opacity
+      duration-200
+      group-hover:opacity-100
+    "
+  >
+    {sdg.description}
+  </div>
+</div>
+    ))}
+  </div>
+</div>
             </footer>
 
           </section>

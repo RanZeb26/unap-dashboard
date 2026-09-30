@@ -6,11 +6,13 @@ interface SDG {
   goal_id: number;
   goal_number: number;
   goal_name: string;
+  description?: string;
 }
 
 interface SDGForm {
   goal_number: string;
   goal_name: string;
+  description?: string;
 }
 
 export default function SDGsAdminPage() {
@@ -32,6 +34,7 @@ export default function SDGsAdminPage() {
     useState<SDGForm>({
       goal_number: "",
       goal_name: "",
+      description: "",
     });
 
 
@@ -124,6 +127,7 @@ export default function SDGsAdminPage() {
     setForm({
       goal_number: "",
       goal_name: "",
+      description: "",
     });
 
     setShowModal(true);
@@ -147,6 +151,8 @@ export default function SDGsAdminPage() {
 
       goal_name:
         sdg.goal_name,
+      description:
+        sdg.description || "",
     });
 
     setShowModal(true);
@@ -258,6 +264,8 @@ export default function SDGsAdminPage() {
             goal_number: number,
             goal_name:
               form.goal_name.trim(),
+            description:
+              form.description?.trim() || null,
           }),
         }
       );
@@ -609,6 +617,9 @@ export default function SDGsAdminPage() {
                       <th>
                         Goal
                       </th>
+                      <th>
+                        Description
+                      </th>
 
                       <th
                         className="text-end px-4"
@@ -680,6 +691,20 @@ export default function SDGsAdminPage() {
                                 sdg.goal_name
                               }
                             </span>
+
+                          </td>
+                                                    <td>
+
+                            <div
+                              className="fw-semibold"style={{
+                                  width: 550,
+                                  height: 40,
+                                }}
+                            >
+                              {
+                                sdg.description || "No description available."
+                              }
+                            </div>
 
                           </td>
 
@@ -852,6 +877,31 @@ export default function SDGsAdminPage() {
                       }
                       placeholder="No Poverty"
                       required
+                    />
+
+                  </div>
+
+                  {/* DESCRIPTION */}
+
+                  <div className="mb-3">
+
+                    <label
+                      className="form-label fw-semibold"
+                    >
+                      Description
+                    </label>
+
+                    <input
+                      type="text"
+                      name="description"
+                      className="form-control"
+                      value={
+                        form.description
+                      }
+                      onChange={
+                        handleChange
+                      }
+                      placeholder="Description of the SDG goal"
                     />
 
                   </div>

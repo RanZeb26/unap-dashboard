@@ -22,6 +22,7 @@ export async function PUT(
     const {
       goal_number,
       goal_name,
+      description
     } = body;
 
     if (
@@ -84,13 +85,15 @@ export async function PUT(
       UPDATE sdg_goals
       SET
         goal_number = ?,
-        goal_name = ?
+        goal_name = ?,
+        description = ?
       WHERE goal_id = ?
       `,
       [
         number,
         goal_name.trim(),
-        id,
+        description?.trim() || null,
+        id
       ]
     );
 

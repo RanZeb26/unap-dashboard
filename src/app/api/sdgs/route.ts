@@ -11,7 +11,8 @@ export async function GET() {
       SELECT
         goal_id,
         goal_number,
-        goal_name
+        goal_name,
+        description
       FROM sdg_goals
       ORDER BY goal_number ASC
     `);
@@ -45,6 +46,7 @@ export async function POST(request: Request) {
     const {
       goal_number,
       goal_name,
+      description
     } = body;
 
     if (
@@ -103,13 +105,15 @@ export async function POST(request: Request) {
       INSERT INTO sdg_goals
       (
         goal_number,
-        goal_name
+        goal_name,
+        description
       )
-      VALUES (?, ?)
+      VALUES (?, ?, ?)
       `,
       [
         number,
         goal_name.trim(),
+        description?.trim() || null,
       ]
     );
 
